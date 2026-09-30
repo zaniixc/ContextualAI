@@ -13,8 +13,13 @@ const SERVICE_MODES: {
 }[] = [
   {
     value: "primary",
-    label: "Primary Gemini",
-    description: "Uses the primary API key.",
+    label: "Primary (Gemini with NVIDIA Fallback)",
+    description: "Uses Gemini first, falls back to NVIDIA DeepSeek on rate limits.",
+  },
+  {
+    value: "nvidia",
+    label: "NVIDIA DeepSeek (Direct)",
+    description: "Directly uses the NVIDIA DeepSeek-v4.1-flash API.",
   },
   {
     value: "fallback-1",

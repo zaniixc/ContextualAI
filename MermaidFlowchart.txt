@@ -1,0 +1,119 @@
+flowchart TD
+    %% Global Styles & Class Definitions
+    classDef startEnd fill:#4f46e5,stroke:#3730a3,stroke-width:2px,color:#fff;
+    classDef userAction fill:#0284c7,stroke:#0369a1,stroke-width:2px,color:#fff;
+    classDef decision fill:#f59e0b,stroke:#d97706,stroke-width:2px,color:#fff;
+    classDef process fill:#f8fafc,stroke:#64748b,stroke-width:1.5px,color:#0f172a;
+    classDef aiLogic fill:#10b981,stroke:#059669,stroke-width:2px,color:#fff;
+    classDef safeguard fill:#ef4444,stroke:#b91c1c,stroke-width:2px,color:#fff;
+    classDef storage fill:#8b5cf6,stroke:#6d28d9,stroke-width:2px,color:#fff;
+
+    %% Entry Point
+    START([User Enters StudyFlow App]):::startEnd --> DASH[Dashboard: /dashboard]:::process
+
+    %% Phase 1: Subject Selection
+    subgraph S1 [Phase 1: Subject Selection]
+        DASH --> SELECT_SUB{Choose Subject Type}:::decision
+        SELECT_SUB -->|Preloaded Subject| SUB_PRELOAD[Select: Contemporary Arts / Biology / Statistics]:::process
+        SELECT_SUB -->|Custom Academic Material| SUB_CUSTOM[Select: Any Academic Material / Custom Upload]:::process
+    end
+
+    %% Phase 2: Material & Task Loading
+    subgraph S2 [Phase 2: Task Setup & Document Ingestion]
+        SUB_PRELOAD --> TASK_PICK[Select Preloaded Task from List]:::process
+        TASK_PICK --> LOAD_TASK_DATA[Load Guidelines, Instructions & Reference Content]:::storage
+
+        SUB_CUSTOM --> UPLOAD_CHOICE{Input Method}:::decision
+        UPLOAD_CHOICE -->|File Upload| FILE_INPUT[Upload File: .docx, .pdf, or .txt]:::userAction
+        UPLOAD_CHOICE -->|Direct Text| PASTE_INPUT[Paste Raw Academic Text]:::userAction
+
+        FILE_INPUT --> PARSER[Serverless Document Parser: Mammoth / PDF-Parse]:::process
+        PARSER --> PARSE_CHECK{Extraction Successful?}:::decision
+        PARSE_CHECK -->|Yes: Text >= 10 chars| DOC_OK[Status: Readable - Loaded into Context]:::process
+        PARSE_CHECK -->|No: Error or Empty| DOC_ERR[Status: Failed - Prompt Manual Input]:::safeguard
+        DOC_ERR --> PASTE_INPUT
+        PASTE_INPUT --> DOC_OK
+    end
+
+    %% Phase 3: Assistance Mode & Task Preparation
+    subgraph S3 [Phase 3: Assistance Mode & Task Configuration]
+        LOAD_TASK_DATA --> ASSIST_MODE[Choose Assistance Mode]:::process
+        DOC_OK --> ASSIST_MODE
+        ASSIST_MODE --> MODE_EXPLAIN[Explain: Clarify Concepts & Instructions]:::process
+        ASSIST_MODE --> MODE_GUIDE[Guide: Step-by-Step Hints & Questions]:::process
+        ASSIST_MODE --> MODE_REVIEW[Review: Check Student Draft Against Rubric]:::process
+
+        MODE_EXPLAIN --> TASK_DETAILS[Optional: /task Details & Draft Input]:::process
+        MODE_GUIDE --> TASK_DETAILS
+        MODE_REVIEW --> TASK_DETAILS
+
+        TASK_DETAILS --> DRAFT_INPUT[Enter Student Answer / Draft Text]:::userAction
+        DRAFT_INPUT --> OPEN_CHAT[Open Contextual Chat: /task/chat]:::startEnd
+    end
+
+    %% Phase 4: Chat Interaction & Guardrails
+    subgraph S4 [Phase 4: Context Assembly & AI Request]
+        OPEN_CHAT --> USER_MSG[User Submits Message or Clicks Suggested Prompt]:::userAction
+        USER_MSG --> BUILD_PAYLOAD[Package Payload: Subject + Task/Doc + Student Draft + Mode + History + Probing Comments]:::process
+        BUILD_PAYLOAD --> ROUTE_POST[Send POST /api/chat with 15s Abort Controller]:::process
+        
+        ROUTE_POST --> RATE_LIMIT{Rate Limit Check: Max 40 req/min}:::decision
+        RATE_LIMIT -->|Exceeded| RET_429[Return HTTP 429: Too Many Requests]:::safeguard
+        RATE_LIMIT -->|Allowed| CHECK_MODE{Service Mode in Controls}:::decision
+    end
+
+    %% Phase 5: Multi-Tier Resilient AI Service Pipeline
+    subgraph S5 [Phase 5: Resilient LLM Backend & Cognitive Safeguards]
+        CHECK_MODE -->|Force Local| GROUNDED_ENGINE
+        CHECK_MODE -->|NVIDIA Direct| CALL_NVIDIA[Call NVIDIA DeepSeek-v4.1-flash API]:::aiLogic
+        CHECK_MODE -->|Primary / Fallback| EVAL_OFFLOADING{Detect Cognitive Offloading?<br/>'Do this for me', 'Write my essay'}:::decision
+
+        EVAL_OFFLOADING -->|Yes: Offloading Detected| SAFEGUARD_REFUSAL[Refuse Direct Completion:<br/>Provide Scaffolding, Outline & Hints]:::safeguard
+        SAFEGUARD_REFUSAL --> FORMAT_JSON
+        EVAL_OFFLOADING -->|No: Valid Request| CALL_GEMINI[Call Gemini API: gemini-3.8-flash]:::aiLogic
+
+        CALL_GEMINI --> GEMINI_RES{Gemini Call Status}:::decision
+        GEMINI_RES -->|Success 200| FORMAT_JSON[Parse JSON & Validate Response Schema]:::process
+        GEMINI_RES -->|429 Quota / Error| COOLDOWN[Mark Key Cooldown 1 Hour]:::process
+        COOLDOWN --> TRY_FALLBACK_GEMINI{Other Gemini Keys Available?}:::decision
+        TRY_FALLBACK_GEMINI -->|Yes| CALL_GEMINI
+        TRY_FALLBACK_GEMINI -->|No: Exhausted| CALL_NVIDIA
+
+        CALL_NVIDIA --> NVIDIA_RES{NVIDIA API Status}:::decision
+        NVIDIA_RES -->|Success 200| CLEAN_DEEPSEEK[Strip Think Tags & Clean JSON Blocks]:::process
+        CLEAN_DEEPSEEK --> FORMAT_JSON
+        NVIDIA_RES -->|Error / Timeout 9s| GROUNDED_ENGINE[Offline Grounded Academic Fallback Engine]:::storage
+        GROUNDED_ENGINE --> FORMAT_JSON
+    end
+
+    %% Phase 6: Response Rendering & Pedagogical Verification
+    subgraph S6 [Phase 6: Structured Response & Metacognitive Probing]
+        FORMAT_JSON --> RENDER_UI[Render Assistant Response Card]:::process
+        RENDER_UI --> BADGE[Display AI Source Badge:<br/>Live Gemini / Live NVIDIA / Backup / Local Fallback]:::process
+        RENDER_UI --> DIRECT_RESP[Direct Response Content & Guiding Hints]:::process
+        RENDER_UI --> KEY_POINTS[Key Points Checklist]:::process
+        RENDER_UI --> DOC_EVIDENCE[Document Evidence: Location + Quote + Why It Matters]:::process
+        RENDER_UI --> PROBING_QS[To Verify Independently: 2-4 Probing Questions + Reasons]:::aiLogic
+        RENDER_UI --> ACTIONS[Suggested Next Action Chips]:::process
+    end
+
+    %% Phase 7: Interactive Verification & Feedback Loop
+    subgraph S7 [Phase 7: Student Reflection & Iterative Learning Loop]
+        PROBING_QS --> STUDENT_INTERACTION{Student Interacts with Probing Questions}:::decision
+        STUDENT_INTERACTION -->|Add Reflection / Answer| COMMENT_BOX[Student Types Inline Comment on Question]:::userAction
+        COMMENT_BOX --> ATTACH_COMMENT[Save Comments in React State]:::storage
+        
+        ATTACH_COMMENT --> REVIEW_CONTEXT[Review Context Modal: Inspect Injected Comments]:::process
+        REVIEW_CONTEXT --> CONFIRM_CONTINUE[Click: Continue with my comments]:::userAction
+        CONFIRM_CONTINUE --> USER_MSG
+
+        STUDENT_INTERACTION -->|Click Suggested Action| ACTIONS --> USER_MSG
+        STUDENT_INTERACTION -->|Type New Inquiry| USER_MSG
+    end
+
+    %% Prototype Controls Link
+    subgraph S8 [Prototype Controls: /prototype-controls]
+        CTRLS[Controls Panel]:::process --> SET_MODE[Switch Service Mode: Primary / NVIDIA / Fallbacks / Local]:::userAction
+        CTRLS --> RESET_DEMO[Reset Prototype State & Clear Local Storage]:::userAction
+        SET_MODE -.-> CHECK_MODE
+    end

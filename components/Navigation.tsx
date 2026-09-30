@@ -20,7 +20,7 @@ export default function Navigation() {
 
   const statusColor = !isMounted
     ? "bg-green-500"
-    : settings.serviceMode === "primary"
+    : settings.serviceMode === "primary" || settings.serviceMode === "nvidia"
       ? "bg-green-500"
       : settings.serviceMode === "local"
         ? "bg-red-500"

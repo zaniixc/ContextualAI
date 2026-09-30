@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { GoogleGenAI } from "@google/genai";
+import OpenAI from "openai";
 import { GEMINI_MODEL } from "@/lib/constants";
 import { parseDocumentBuffer } from "@/lib/server-document-parser";
 import type {
@@ -27,9 +28,10 @@ function checkRateLimit(ip: string): boolean {
   return true;
 }
 
-/* ── Key Exhaustion Cooldown Cache (25s cooldown on 429 rather than permanent blacklist) ── */
+/* ── Key Exhaustion Cooldown Cache (1hr cooldown on 429 quota exhaustion) ── */
 const exhaustedKeys = new Map<string, number>();
-const COOLDOWN_DURATION_MS = 25 * 1000;
+const COOLDOWN_DURATION_MS = 60 * 60 * 1000;
+
 
 /* ── Cognitive Offloading Detection ── */
 function isCognitiveOffloading(msg: string): boolean {
@@ -626,48 +628,105 @@ function generateGroundedFallback(
   };
 }
 
-/* ── Call Gemini API with Dual-Method Resilience (interactions.create + models.generateContent) ── */
+/* ── Call Gemini API with Fast Timeout & Immediate Quota Failover ── */
 async function callGeminiApi(
   apiKey: string,
   promptText: string,
 ): Promise<string> {
   const ai = new GoogleGenAI({ apiKey });
 
-  // 1. Try interactions.create
+  // 1. Try interactions.create with strict 3500ms timeout
   try {
     const interaction = await ai.interactions.create(
       { model: GEMINI_MODEL, input: promptText },
-      { maxRetries: 0, timeout: 9000 },
+      { maxRetries: 0, timeout: 3500 },
     );
     if (interaction.output_text) {
       return interaction.output_text;
     }
   } catch (err: unknown) {
     const errMsg = err instanceof Error ? err.message : String(err);
-    console.warn("interactions.create notice, attempting models.generateContent fallback...", errMsg.substring(0, 80));
+    // If it's a quota or rate limit error, fail immediately so key rotation / NVIDIA can take over
+    if (
+      errMsg.includes("429") ||
+      errMsg.includes("quota") ||
+      errMsg.includes("Rate limit") ||
+      errMsg.includes("RESOURCE_EXHAUSTED")
+    ) {
+      throw err;
+    }
+
+    // Attempt generateContent fallback for non-quota errors
+    try {
+      const response = await ai.models.generateContent({
+        model: GEMINI_MODEL,
+        contents: promptText,
+      });
+      if (response.text) {
+        return response.text;
+      }
+    } catch {
+      throw err;
+    }
+    throw err;
   }
 
-  // 2. Try models.generateContent as resilient fallback on the same model
-  const response = await ai.models.generateContent({
-    model: GEMINI_MODEL,
-    contents: promptText,
+  throw new Error("No output text returned from Gemini API");
+}
+
+/* ── Call NVIDIA DeepSeek API (OpenAI-compatible with strict 9s timeout) ── */
+async function callNvidiaApi(
+  apiKey: string,
+  promptText: string,
+): Promise<string> {
+  const openai = new OpenAI({
+    apiKey,
+    baseURL: "https://integrate.api.nvidia.com/v1",
+    timeout: 9000,
+    maxRetries: 0,
   });
-  const text = response.text;
+
+  const completion = await openai.chat.completions.create({
+    model: "deepseek-ai/deepseek-v4.1-flash",
+    messages: [
+      {
+        role: "user",
+        content: [
+          {
+            type: "text",
+            text: promptText,
+          },
+        ],
+      },
+    ],
+    temperature: 0.2,
+    top_p: 0.7,
+    max_tokens: 2048,
+  });
+
+  const text = completion.choices[0]?.message?.content;
   if (!text) {
-    throw new Error("No output text returned from Gemini API");
+    throw new Error("No output text returned from NVIDIA DeepSeek API");
   }
   return text;
 }
 
-/* ── Parse JSON safely ── */
+/* ── Parse JSON safely (supporting DeepSeek reasoning and code blocks) ── */
 function parseGeminiOutput(raw: string): GeminiResponse {
   let cleaned = raw.trim();
+
+  // Strip DeepSeek <think> reasoning blocks if present
+  cleaned = cleaned.replace(/<think>[\s\S]*?<\/think>/gi, "").trim();
+
+  // Strip markdown code block wrappers
   if (cleaned.startsWith("```")) {
     cleaned = cleaned
       .replace(/^```(?:json)?\s*/i, "")
-      .replace(/\s*```\s*$/, "");
+      .replace(/\s*```\s*$/, "")
+      .trim();
   }
 
+  // Attempt direct JSON parse
   try {
     const parsed = JSON.parse(cleaned);
     return {
@@ -690,12 +749,41 @@ function parseGeminiOutput(raw: string): GeminiResponse {
       requiresReview: !!parsed.requiresReview,
     };
   } catch {
+    // If direct parse failed, attempt to find { ... } JSON substring inside cleaned
+    const jsonMatch = cleaned.match(/\{[\s\S]*\}/);
+    if (jsonMatch) {
+      try {
+        const parsed = JSON.parse(jsonMatch[0]);
+        return {
+          status: parsed.status || "guided_help",
+          directResponse: parsed.directResponse || parsed.response || cleaned,
+          documentEvidence: Array.isArray(parsed.documentEvidence)
+            ? parsed.documentEvidence
+            : [],
+          keyPoints: Array.isArray(parsed.keyPoints) ? parsed.keyPoints : [],
+          probingQuestions: Array.isArray(parsed.probingQuestions)
+            ? parsed.probingQuestions
+            : [],
+          suggestedNextActions: Array.isArray(parsed.suggestedNextActions)
+            ? parsed.suggestedNextActions
+            : [],
+          missingInformation: Array.isArray(parsed.missingInformation)
+            ? parsed.missingInformation
+            : [],
+          requiresStudentAnswer: !!parsed.requiresStudentAnswer,
+          requiresReview: !!parsed.requiresReview,
+        };
+      } catch {
+        // Fall through to text fallback
+      }
+    }
+
     // Unstructured text fallback
     return {
       status: "guided_help",
-      directResponse: raw.trim(),
+      directResponse: cleaned || raw.trim(),
       documentEvidence: [],
-      keyPoints: ["Unstructured AI response"],
+      keyPoints: ["Academic guidance response"],
       probingQuestions: [
         {
           question:
@@ -771,10 +859,42 @@ export async function POST(request: Request) {
       });
     }
 
-    // 5. Build Gemini Prompt
+    // 5. Build AI Prompt
     const promptText = buildPrompt(body);
 
-    // 6. Key Rotation across Gemini Keys (with 25s cooldown check)
+    const nvidiaKey =
+      process.env.NVIDIA_API_KEY ||
+      process.env.DEEPSEEK_NVDIA_API ||
+      process.env.DEEPSEEK_API;
+
+    // 6. Direct NVIDIA DeepSeek Mode if explicitly selected
+    if (forceMode === "nvidia") {
+      if (nvidiaKey) {
+        try {
+          const rawResponse = await callNvidiaApi(nvidiaKey, promptText);
+          const parsed = parseGeminiOutput(rawResponse);
+          return NextResponse.json({
+            success: true,
+            data: parsed,
+            source: "nvidia-live" as ServiceSource,
+            timestamp: new Date().toISOString(),
+          });
+        } catch (err: unknown) {
+          const errMsg = err instanceof Error ? err.message : String(err);
+          console.warn("Direct NVIDIA API notice:", errMsg.substring(0, 100));
+        }
+      }
+      // If direct NVIDIA failed or key missing, immediately return grounded fallback (do NOT fall through to broken Gemini keys!)
+      const fallback = generateGroundedFallback(body);
+      return NextResponse.json({
+        success: true,
+        data: fallback,
+        source: "local-fallback" as ServiceSource,
+        timestamp: new Date().toISOString(),
+      });
+    }
+
+    // 7. Key Rotation across Gemini Keys (with 1hr quota cooldown check)
     const now = Date.now();
     const keys = [
       {
@@ -806,12 +926,7 @@ export async function POST(request: Request) {
       candidateKeys = candidateKeys.filter((_, i) => i >= 2);
     }
 
-    // If all keys are currently cooling down, fallback candidateKeys to all keys to retry
-    if (candidateKeys.length === 0) {
-      candidateKeys = keys.filter((k) => Boolean(k.key));
-    }
-
-    // Execute Live Call with Key Rotation
+    // Execute Live Call with Gemini Key Rotation (if candidate keys exist)
     for (const { key, source } of candidateKeys) {
       if (!key) continue;
       try {
@@ -835,13 +950,30 @@ export async function POST(request: Request) {
           errMsg.includes("Rate limit") ||
           errMsg.includes("RESOURCE_EXHAUSTED")
         ) {
-          // Set temporary 25s cooldown rather than permanent blacklist
           exhaustedKeys.set(key, Date.now() + COOLDOWN_DURATION_MS);
         }
       }
     }
 
-    // 7. Graceful Fallback if all API keys fail or are exhausted
+    // 8. Resilient NVIDIA DeepSeek API Failover
+    // If Gemini keys hit quota or are unavailable, try NVIDIA DeepSeek
+    if (nvidiaKey) {
+      try {
+        const rawResponse = await callNvidiaApi(nvidiaKey, promptText);
+        const parsed = parseGeminiOutput(rawResponse);
+        return NextResponse.json({
+          success: true,
+          data: parsed,
+          source: "nvidia-live" as ServiceSource,
+          timestamp: new Date().toISOString(),
+        });
+      } catch (err: unknown) {
+        const errMsg = err instanceof Error ? err.message : String(err);
+        console.warn("NVIDIA DeepSeek failover notice:", errMsg.substring(0, 100));
+      }
+    }
+
+    // 9. Graceful Fallback if all API keys fail or are exhausted
     const fallbackData = generateGroundedFallback(body);
     return NextResponse.json({
       success: true,

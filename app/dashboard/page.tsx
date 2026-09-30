@@ -126,7 +126,7 @@ export default function DashboardPage() {
   };
 
   const statusColor =
-    settings.serviceMode === "primary"
+    settings.serviceMode === "primary" || settings.serviceMode === "nvidia"
       ? "bg-green-500"
       : settings.serviceMode === "local"
         ? "bg-red-500"
@@ -134,10 +134,12 @@ export default function DashboardPage() {
 
   const statusLabel =
     settings.serviceMode === "primary"
-      ? "Live AI"
-      : settings.serviceMode === "local"
-        ? "Local Fallback"
-        : "Backup AI";
+      ? "Live AI (Gemini / NVIDIA)"
+      : settings.serviceMode === "nvidia"
+        ? "Live AI (NVIDIA DeepSeek)"
+        : settings.serviceMode === "local"
+          ? "Local Fallback"
+          : "Backup AI";
 
   return (
     <AppShell>

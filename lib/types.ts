@@ -2,9 +2,18 @@
 
 export type AssistanceMode = "explain" | "guide" | "review";
 
-export type ServiceSource = "gemini-live" | "gemini-backup" | "local-fallback";
+export type ServiceSource =
+  | "gemini-live"
+  | "gemini-backup"
+  | "nvidia-live"
+  | "local-fallback";
 
-export type ServiceMode = "primary" | "fallback-1" | "fallback-2" | "local";
+export type ServiceMode =
+  | "primary"
+  | "nvidia"
+  | "fallback-1"
+  | "fallback-2"
+  | "local";
 
 export type ResponseStatus =
   | "needs_clarification"

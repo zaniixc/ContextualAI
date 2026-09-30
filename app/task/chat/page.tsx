@@ -130,6 +130,9 @@ export default function ChatPage() {
               : m.content,
         }));
 
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 15000);
+
       try {
         const requestBody = {
           subject: selectedSubject,
@@ -156,7 +159,10 @@ export default function ChatPage() {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(requestBody),
+          signal: controller.signal,
         });
+
+        clearTimeout(timeoutId);
 
         const data = await res.json();
 
@@ -181,8 +187,13 @@ export default function ChatPage() {
         setLastResponse(responseData);
         setComments({}); // Reset comments for new probing questions
       } catch (err: unknown) {
+        clearTimeout(timeoutId);
         const errMsg =
-          err instanceof Error ? err.message : "Something went wrong.";
+          err instanceof Error
+            ? err.name === "AbortError"
+              ? "Request timed out. Please try again or switch to Local Fallback in Controls."
+              : err.message
+            : "Something went wrong.";
         setError(errMsg);
       } finally {
         setIsLoading(false);
@@ -354,7 +365,7 @@ export default function ChatPage() {
                     <div className="flex items-center gap-2 text-xs text-muted">
                       <span
                         className={`w-2 h-2 rounded-full ${
-                          msg.source === "gemini-live"
+                          msg.source === "gemini-live" || msg.source === "nvidia-live"
                             ? "bg-green-500"
                             : msg.source === "gemini-backup"
                               ? "bg-yellow-500"
@@ -363,10 +374,12 @@ export default function ChatPage() {
                       />
                       <span>
                         {msg.source === "gemini-live"
-                          ? "Live AI"
-                          : msg.source === "gemini-backup"
-                            ? "Backup AI"
-                            : "Local Fallback"}
+                          ? "Live AI (Gemini)"
+                          : msg.source === "nvidia-live"
+                            ? "Live AI (NVIDIA DeepSeek)"
+                            : msg.source === "gemini-backup"
+                              ? "Backup AI"
+                              : "Local Fallback"}
                       </span>
                     </div>
                   )}
