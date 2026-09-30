@@ -60,7 +60,11 @@ export function PrototypeProvider({ children }: { children: React.ReactNode }) {
     try {
       const saved = localStorage.getItem("studyflow-settings");
       if (saved) {
-        setSettings({ ...defaultSettings, ...JSON.parse(saved) });
+        const parsed = JSON.parse(saved);
+        if (parsed.serviceMode === "nvidia") {
+          parsed.serviceMode = "primary";
+        }
+        setSettings({ ...defaultSettings, ...parsed });
       }
     } catch {
       /* ignore */

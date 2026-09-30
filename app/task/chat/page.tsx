@@ -181,6 +181,7 @@ export default function ChatPage() {
           assistanceMode,
           responseData,
           source,
+          cached: !!data.cached,
         };
 
         setMessages((prev) => [...prev, assistantMsg]);
@@ -381,6 +382,11 @@ export default function ChatPage() {
                               ? "Backup AI"
                               : "Local Fallback"}
                       </span>
+                      {msg.cached && (
+                        <span className="text-[10px] bg-primary/10 text-primary px-1.5 py-0.5 rounded font-medium flex items-center gap-0.5">
+                          ⚡ Instant Cache
+                        </span>
+                      )}
                     </div>
                   )}
 

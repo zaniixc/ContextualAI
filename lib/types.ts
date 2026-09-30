@@ -88,6 +88,7 @@ export interface ChatMessage {
   assistanceMode?: AssistanceMode;
   responseData?: GeminiResponse;
   source?: ServiceSource;
+  cached?: boolean;
   probingQuestionComments?: ProbingQuestionComment[];
 }
 

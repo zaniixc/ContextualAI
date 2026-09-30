@@ -1,10 +1,10 @@
 // lib/constants.ts
 
 /** The Gemini model identifier used by the API route. */
-export const GEMINI_MODEL = "gemini-3.8-flash";
+export const GEMINI_MODEL = "gemini-3.5-flash-lite";
 
 /** Human-readable label shown in the UI footer and badges. */
-export const GEMINI_MODEL_LABEL = "Gemini 3.8 Flash";
+export const GEMINI_MODEL_LABEL = "gemini-3.5-flash-lite";
 
 /** Max chars for user message input. */
 export const MAX_MESSAGE_LENGTH = 2000;

@@ -13,28 +13,28 @@ const SERVICE_MODES: {
 }[] = [
   {
     value: "primary",
-    label: "Primary (Gemini with NVIDIA Fallback)",
-    description: "Uses Gemini first, falls back to NVIDIA DeepSeek on rate limits.",
+    label: "Primary Pipeline (Gemini ➔ NVIDIA ➔ Fallbacks)",
+    description: "Cascades: Primary Gemini 3.5 ➔ NVIDIA DeepSeek ➔ Fallback 1 ➔ Fallback 2.",
   },
   {
     value: "nvidia",
     label: "NVIDIA DeepSeek (Direct)",
-    description: "Directly uses the NVIDIA DeepSeek-v4.1-flash API.",
+    description: "Directly queries the NVIDIA DeepSeek-v4.1-flash API.",
   },
   {
     value: "fallback-1",
     label: "Force Fallback Key 1",
-    description: "Simulates primary key failure.",
+    description: "Simulates primary failure, jumps to Gemini Fallback 1.",
   },
   {
     value: "fallback-2",
     label: "Force Fallback Key 2",
-    description: "Simulates both primary and fallback 1 failure.",
+    description: "Simulates upstream failures, uses Gemini Fallback 2.",
   },
   {
     value: "local",
     label: "Force Local Fallback",
-    description: "Simulates complete API failure.",
+    description: "Simulates complete offline mode with grounded academic templates.",
   },
 ];
 

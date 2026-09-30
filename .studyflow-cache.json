@@ -1,0 +1,962 @@
+[
+  {
+    "key": "sub:contemporary-arts::task:modern-techniques-traditional-authenticity::mode:guide::msg:what is this task asking me to do::ans:none::comments:none",
+    "entry": {
+      "data": {
+        "status": "guided_help",
+        "directResponse": "This task requires you to write an academic essay of at least 250 words examining the debate and interplay between Modern Techniques and Traditional Authenticity in Contemporary Arts. The guidelines explicitly specify that all writing must be your own authentic work (without relying on AI generation or copied material) and submitted by October 5, 2026, at 4:00 PM via Messenger, Word, or PDF.",
+        "documentEvidence": [
+          {
+            "location": "Task Guidelines - Requirement 1",
+            "excerptOrSummary": "Your essay must contain at least 250 words. Essays with fewer than 250 words will not be accepted.",
+            "whyItMatters": "Establishes the minimum word count threshold for academic evaluation."
+          },
+          {
+            "location": "Task Guidelines - Requirement 2",
+            "excerptOrSummary": "Your essay must be your own work. Do not use AI tools, generators, or copied content.",
+            "whyItMatters": "Enforces academic integrity and original student evaluation."
+          },
+          {
+            "location": "Task Guidelines - Requirement 3",
+            "excerptOrSummary": "Deadline: October 5, 2026, at 4:00 PM.",
+            "whyItMatters": "Firm submission cutoff deadline."
+          }
+        ],
+        "keyPoints": [
+          "Compare modern tools (digital, AI, interactive) vs. traditional practices (weaving, pottery, carving).",
+          "Explain how both approaches can be combined rather than treated as enemies.",
+          "Ensure word count is at least 250 words before submission."
+        ],
+        "probingQuestions": [
+          {
+            "question": "Which contemporary artistic medium (e.g. digital illustration, indigenous weaving) do you plan to use as your central case study?",
+            "reason": "Focusing on a concrete artistic medium grounds your comparative argument in tangible evidence."
+          },
+          {
+            "question": "How do you define 'traditional authenticity' in your own words beyond just handmade processes?",
+            "reason": "Clarifying your definitions prevents broad generalizations about cultural heritage."
+          }
+        ],
+        "suggestedNextActions": [
+          "Break down the main concepts for me",
+          "Give me an outline structure",
+          "What should I focus on first?"
+        ],
+        "missingInformation": [],
+        "requiresStudentAnswer": false,
+        "requiresReview": false
+      },
+      "source": "gemini-live",
+      "timestamp": 1790774205562
+    }
+  },
+  {
+    "key": "sub:contemporary-arts::task:modern-techniques-traditional-authenticity::mode:guide::msg:what does this task ask::ans:none::comments:none",
+    "entry": {
+      "data": {
+        "status": "guided_help",
+        "directResponse": "This task requires you to write an academic essay of at least 250 words examining the debate and interplay between Modern Techniques and Traditional Authenticity in Contemporary Arts. The guidelines explicitly specify that all writing must be your own authentic work (without relying on AI generation or copied material) and submitted by October 5, 2026, at 4:00 PM via Messenger, Word, or PDF.",
+        "documentEvidence": [
+          {
+            "location": "Task Guidelines - Requirement 1",
+            "excerptOrSummary": "Your essay must contain at least 250 words. Essays with fewer than 250 words will not be accepted.",
+            "whyItMatters": "Establishes the minimum word count threshold for academic evaluation."
+          },
+          {
+            "location": "Task Guidelines - Requirement 2",
+            "excerptOrSummary": "Your essay must be your own work. Do not use AI tools, generators, or copied content.",
+            "whyItMatters": "Enforces academic integrity and original student evaluation."
+          },
+          {
+            "location": "Task Guidelines - Requirement 3",
+            "excerptOrSummary": "Deadline: October 5, 2026, at 4:00 PM.",
+            "whyItMatters": "Firm submission cutoff deadline."
+          }
+        ],
+        "keyPoints": [
+          "Compare modern tools (digital, AI, interactive) vs. traditional practices (weaving, pottery, carving).",
+          "Explain how both approaches can be combined rather than treated as enemies.",
+          "Ensure word count is at least 250 words before submission."
+        ],
+        "probingQuestions": [
+          {
+            "question": "Which contemporary artistic medium (e.g. digital illustration, indigenous weaving) do you plan to use as your central case study?",
+            "reason": "Focusing on a concrete artistic medium grounds your comparative argument in tangible evidence."
+          },
+          {
+            "question": "How do you define 'traditional authenticity' in your own words beyond just handmade processes?",
+            "reason": "Clarifying your definitions prevents broad generalizations about cultural heritage."
+          }
+        ],
+        "suggestedNextActions": [
+          "Break down the main concepts for me",
+          "Give me an outline structure",
+          "What should I focus on first?"
+        ],
+        "missingInformation": [],
+        "requiresStudentAnswer": false,
+        "requiresReview": false
+      },
+      "source": "gemini-live",
+      "timestamp": 1790774205563
+    }
+  },
+  {
+    "key": "sub:contemporary-arts::task:modern-techniques-traditional-authenticity::mode:guide::msg:explain the task instructions::ans:none::comments:none",
+    "entry": {
+      "data": {
+        "status": "guided_help",
+        "directResponse": "This task requires you to write an academic essay of at least 250 words examining the debate and interplay between Modern Techniques and Traditional Authenticity in Contemporary Arts. The guidelines explicitly specify that all writing must be your own authentic work (without relying on AI generation or copied material) and submitted by October 5, 2026, at 4:00 PM via Messenger, Word, or PDF.",
+        "documentEvidence": [
+          {
+            "location": "Task Guidelines - Requirement 1",
+            "excerptOrSummary": "Your essay must contain at least 250 words. Essays with fewer than 250 words will not be accepted.",
+            "whyItMatters": "Establishes the minimum word count threshold for academic evaluation."
+          },
+          {
+            "location": "Task Guidelines - Requirement 2",
+            "excerptOrSummary": "Your essay must be your own work. Do not use AI tools, generators, or copied content.",
+            "whyItMatters": "Enforces academic integrity and original student evaluation."
+          },
+          {
+            "location": "Task Guidelines - Requirement 3",
+            "excerptOrSummary": "Deadline: October 5, 2026, at 4:00 PM.",
+            "whyItMatters": "Firm submission cutoff deadline."
+          }
+        ],
+        "keyPoints": [
+          "Compare modern tools (digital, AI, interactive) vs. traditional practices (weaving, pottery, carving).",
+          "Explain how both approaches can be combined rather than treated as enemies.",
+          "Ensure word count is at least 250 words before submission."
+        ],
+        "probingQuestions": [
+          {
+            "question": "Which contemporary artistic medium (e.g. digital illustration, indigenous weaving) do you plan to use as your central case study?",
+            "reason": "Focusing on a concrete artistic medium grounds your comparative argument in tangible evidence."
+          },
+          {
+            "question": "How do you define 'traditional authenticity' in your own words beyond just handmade processes?",
+            "reason": "Clarifying your definitions prevents broad generalizations about cultural heritage."
+          }
+        ],
+        "suggestedNextActions": [
+          "Break down the main concepts for me",
+          "Give me an outline structure",
+          "What should I focus on first?"
+        ],
+        "missingInformation": [],
+        "requiresStudentAnswer": false,
+        "requiresReview": false
+      },
+      "source": "gemini-live",
+      "timestamp": 1790774205563
+    }
+  },
+  {
+    "key": "sub:contemporary-arts::task:modern-techniques-traditional-authenticity::mode:guide::msg:break down the main concepts for me::ans:none::comments:none",
+    "entry": {
+      "data": {
+        "status": "guided_help",
+        "directResponse": "The reference material highlights three interconnected core concepts:\n\n1. Modern Techniques: Digital technology, video, photography, and interactive media that empower artists to experiment rapidly, revise easily, and address global issues like climate change and social identity.\n\n2. Traditional Authenticity: Cultural heritage, human craftsmanship, patience, and ancestral methods (weaving, pottery, carving) that anchor artistic identity and preserve community memory.\n\n3. Harmonious Synthesis: Contemporary art reaches its highest potential when artists do not treat modern and traditional techniques as opposites, but instead merge them (e.g., using digital design to celebrate indigenous motifs).",
+        "documentEvidence": [
+          {
+            "location": "Reference Text - Paragraph 2",
+            "excerptOrSummary": "With digital technology, artists can create images, animations, music, and interactive artworks... to communicate contemporary issues.",
+            "whyItMatters": "Highlights modern technology's role in global reach and thematic relevance."
+          },
+          {
+            "location": "Reference Text - Paragraph 4",
+            "excerptOrSummary": "Rather than viewing modern techniques and traditional authenticity as opposing forces, contemporary artists can combine them.",
+            "whyItMatters": "The thesis core: synthesis over conflict."
+          }
+        ],
+        "keyPoints": [
+          "Modern techniques foster innovation and accessibility.",
+          "Traditional practices preserve cultural lineage and human touch.",
+          "Synthesis allows art to honor the past while innovating for the future."
+        ],
+        "probingQuestions": [
+          {
+            "question": "Can an artwork created purely with digital software still possess 'authenticity'?",
+            "reason": "Testing boundary cases helps you form a nuanced, defensible position."
+          },
+          {
+            "question": "What specific risk occurs if contemporary artists completely abandon traditional craftsmanship?",
+            "reason": "Identifies the cultural stakes involved in the modernization debate."
+          }
+        ],
+        "suggestedNextActions": [
+          "Give me a guiding hint to get started",
+          "Help me draft my thesis statement",
+          "What should I focus on first?"
+        ],
+        "missingInformation": [],
+        "requiresStudentAnswer": false,
+        "requiresReview": false
+      },
+      "source": "gemini-live",
+      "timestamp": 1790774205563
+    }
+  },
+  {
+    "key": "sub:contemporary-arts::task:modern-techniques-traditional-authenticity::mode:guide::msg:break down the concepts::ans:none::comments:none",
+    "entry": {
+      "data": {
+        "status": "guided_help",
+        "directResponse": "The reference material highlights three interconnected core concepts:\n\n1. Modern Techniques: Digital technology, video, photography, and interactive media that empower artists to experiment rapidly, revise easily, and address global issues like climate change and social identity.\n\n2. Traditional Authenticity: Cultural heritage, human craftsmanship, patience, and ancestral methods (weaving, pottery, carving) that anchor artistic identity and preserve community memory.\n\n3. Harmonious Synthesis: Contemporary art reaches its highest potential when artists do not treat modern and traditional techniques as opposites, but instead merge them (e.g., using digital design to celebrate indigenous motifs).",
+        "documentEvidence": [
+          {
+            "location": "Reference Text - Paragraph 2",
+            "excerptOrSummary": "With digital technology, artists can create images, animations, music, and interactive artworks... to communicate contemporary issues.",
+            "whyItMatters": "Highlights modern technology's role in global reach and thematic relevance."
+          },
+          {
+            "location": "Reference Text - Paragraph 4",
+            "excerptOrSummary": "Rather than viewing modern techniques and traditional authenticity as opposing forces, contemporary artists can combine them.",
+            "whyItMatters": "The thesis core: synthesis over conflict."
+          }
+        ],
+        "keyPoints": [
+          "Modern techniques foster innovation and accessibility.",
+          "Traditional practices preserve cultural lineage and human touch.",
+          "Synthesis allows art to honor the past while innovating for the future."
+        ],
+        "probingQuestions": [
+          {
+            "question": "Can an artwork created purely with digital software still possess 'authenticity'?",
+            "reason": "Testing boundary cases helps you form a nuanced, defensible position."
+          },
+          {
+            "question": "What specific risk occurs if contemporary artists completely abandon traditional craftsmanship?",
+            "reason": "Identifies the cultural stakes involved in the modernization debate."
+          }
+        ],
+        "suggestedNextActions": [
+          "Give me a guiding hint to get started",
+          "Help me draft my thesis statement",
+          "What should I focus on first?"
+        ],
+        "missingInformation": [],
+        "requiresStudentAnswer": false,
+        "requiresReview": false
+      },
+      "source": "gemini-live",
+      "timestamp": 1790774205563
+    }
+  },
+  {
+    "key": "sub:contemporary-arts::task:modern-techniques-traditional-authenticity::mode:guide::msg:main concepts::ans:none::comments:none",
+    "entry": {
+      "data": {
+        "status": "guided_help",
+        "directResponse": "The reference material highlights three interconnected core concepts:\n\n1. Modern Techniques: Digital technology, video, photography, and interactive media that empower artists to experiment rapidly, revise easily, and address global issues like climate change and social identity.\n\n2. Traditional Authenticity: Cultural heritage, human craftsmanship, patience, and ancestral methods (weaving, pottery, carving) that anchor artistic identity and preserve community memory.\n\n3. Harmonious Synthesis: Contemporary art reaches its highest potential when artists do not treat modern and traditional techniques as opposites, but instead merge them (e.g., using digital design to celebrate indigenous motifs).",
+        "documentEvidence": [
+          {
+            "location": "Reference Text - Paragraph 2",
+            "excerptOrSummary": "With digital technology, artists can create images, animations, music, and interactive artworks... to communicate contemporary issues.",
+            "whyItMatters": "Highlights modern technology's role in global reach and thematic relevance."
+          },
+          {
+            "location": "Reference Text - Paragraph 4",
+            "excerptOrSummary": "Rather than viewing modern techniques and traditional authenticity as opposing forces, contemporary artists can combine them.",
+            "whyItMatters": "The thesis core: synthesis over conflict."
+          }
+        ],
+        "keyPoints": [
+          "Modern techniques foster innovation and accessibility.",
+          "Traditional practices preserve cultural lineage and human touch.",
+          "Synthesis allows art to honor the past while innovating for the future."
+        ],
+        "probingQuestions": [
+          {
+            "question": "Can an artwork created purely with digital software still possess 'authenticity'?",
+            "reason": "Testing boundary cases helps you form a nuanced, defensible position."
+          },
+          {
+            "question": "What specific risk occurs if contemporary artists completely abandon traditional craftsmanship?",
+            "reason": "Identifies the cultural stakes involved in the modernization debate."
+          }
+        ],
+        "suggestedNextActions": [
+          "Give me a guiding hint to get started",
+          "Help me draft my thesis statement",
+          "What should I focus on first?"
+        ],
+        "missingInformation": [],
+        "requiresStudentAnswer": false,
+        "requiresReview": false
+      },
+      "source": "gemini-live",
+      "timestamp": 1790774205563
+    }
+  },
+  {
+    "key": "sub:contemporary-arts::task:modern-techniques-traditional-authenticity::mode:guide::msg:what are the key concepts::ans:none::comments:none",
+    "entry": {
+      "data": {
+        "status": "guided_help",
+        "directResponse": "The reference material highlights three interconnected core concepts:\n\n1. Modern Techniques: Digital technology, video, photography, and interactive media that empower artists to experiment rapidly, revise easily, and address global issues like climate change and social identity.\n\n2. Traditional Authenticity: Cultural heritage, human craftsmanship, patience, and ancestral methods (weaving, pottery, carving) that anchor artistic identity and preserve community memory.\n\n3. Harmonious Synthesis: Contemporary art reaches its highest potential when artists do not treat modern and traditional techniques as opposites, but instead merge them (e.g., using digital design to celebrate indigenous motifs).",
+        "documentEvidence": [
+          {
+            "location": "Reference Text - Paragraph 2",
+            "excerptOrSummary": "With digital technology, artists can create images, animations, music, and interactive artworks... to communicate contemporary issues.",
+            "whyItMatters": "Highlights modern technology's role in global reach and thematic relevance."
+          },
+          {
+            "location": "Reference Text - Paragraph 4",
+            "excerptOrSummary": "Rather than viewing modern techniques and traditional authenticity as opposing forces, contemporary artists can combine them.",
+            "whyItMatters": "The thesis core: synthesis over conflict."
+          }
+        ],
+        "keyPoints": [
+          "Modern techniques foster innovation and accessibility.",
+          "Traditional practices preserve cultural lineage and human touch.",
+          "Synthesis allows art to honor the past while innovating for the future."
+        ],
+        "probingQuestions": [
+          {
+            "question": "Can an artwork created purely with digital software still possess 'authenticity'?",
+            "reason": "Testing boundary cases helps you form a nuanced, defensible position."
+          },
+          {
+            "question": "What specific risk occurs if contemporary artists completely abandon traditional craftsmanship?",
+            "reason": "Identifies the cultural stakes involved in the modernization debate."
+          }
+        ],
+        "suggestedNextActions": [
+          "Give me a guiding hint to get started",
+          "Help me draft my thesis statement",
+          "What should I focus on first?"
+        ],
+        "missingInformation": [],
+        "requiresStudentAnswer": false,
+        "requiresReview": false
+      },
+      "source": "gemini-live",
+      "timestamp": 1790774205563
+    }
+  },
+  {
+    "key": "sub:general::task:no-task::mode:guide::msg:please do this task for me::ans:none::comments:none",
+    "entry": {
+      "data": {
+        "status": "guided_help",
+        "directResponse": "I cannot write the essay or complete this assignment for you, as doing so would violate academic integrity and prevent you from developing your own analytical voice.\n\nHowever, I can guide you through the process step-by-step! Here is a recommended structural roadmap you can follow to write your own draft:\n\n1. Introduction (40-50 words): Introduce the debate between modern tools and traditional craftsmanship, ending with your central thesis.\n2. Body Paragraph 1 (80-100 words): Discuss how modern techniques expand creative expression.\n3. Body Paragraph 2 (80-100 words): Discuss why traditional authenticity remains culturally indispensable.\n4. Synthesis & Conclusion (60-80 words): Explain how artists successfully integrate both to honor the past while innovating.",
+        "documentEvidence": [
+          {
+            "location": "Task Guidelines - Plagiarism Policy",
+            "excerptOrSummary": "Your essay must be your own work. Do not use AI tools, generators, or copied content from the internet.",
+            "whyItMatters": "Protects student standing and fulfills the thesis goal of mitigating cognitive offloading."
+          }
+        ],
+        "keyPoints": [
+          "Direct essay completion is declined to support genuine student learning.",
+          "Break writing into manageable chunks: Introduction, Arguments, Synthesis, Conclusion.",
+          "You can share a 1-2 sentence claim and I will critique its reasoning."
+        ],
+        "probingQuestions": [
+          {
+            "question": "Which of the two sides do you personally find more compelling, or do you believe synthesis is essential?",
+            "reason": "Formulating your personal viewpoint is the first step toward an original essay."
+          },
+          {
+            "question": "What introductory hook could you write to grab the instructor's attention?",
+            "reason": "Drafting an initial hook gets your writing momentum started without relying on AI generation."
+          }
+        ],
+        "suggestedNextActions": [
+          "Help me write an opening sentence",
+          "Give me a step-by-step checklist",
+          "What should I focus on first?"
+        ],
+        "missingInformation": [],
+        "requiresStudentAnswer": false,
+        "requiresReview": false
+      },
+      "source": "gemini-live",
+      "timestamp": 1790774205563
+    }
+  },
+  {
+    "key": "sub:general::task:no-task::mode:guide::msg:do this task for me::ans:none::comments:none",
+    "entry": {
+      "data": {
+        "status": "guided_help",
+        "directResponse": "I cannot write the essay or complete this assignment for you, as doing so would violate academic integrity and prevent you from developing your own analytical voice.\n\nHowever, I can guide you through the process step-by-step! Here is a recommended structural roadmap you can follow to write your own draft:\n\n1. Introduction (40-50 words): Introduce the debate between modern tools and traditional craftsmanship, ending with your central thesis.\n2. Body Paragraph 1 (80-100 words): Discuss how modern techniques expand creative expression.\n3. Body Paragraph 2 (80-100 words): Discuss why traditional authenticity remains culturally indispensable.\n4. Synthesis & Conclusion (60-80 words): Explain how artists successfully integrate both to honor the past while innovating.",
+        "documentEvidence": [
+          {
+            "location": "Task Guidelines - Plagiarism Policy",
+            "excerptOrSummary": "Your essay must be your own work. Do not use AI tools, generators, or copied content from the internet.",
+            "whyItMatters": "Protects student standing and fulfills the thesis goal of mitigating cognitive offloading."
+          }
+        ],
+        "keyPoints": [
+          "Direct essay completion is declined to support genuine student learning.",
+          "Break writing into manageable chunks: Introduction, Arguments, Synthesis, Conclusion.",
+          "You can share a 1-2 sentence claim and I will critique its reasoning."
+        ],
+        "probingQuestions": [
+          {
+            "question": "Which of the two sides do you personally find more compelling, or do you believe synthesis is essential?",
+            "reason": "Formulating your personal viewpoint is the first step toward an original essay."
+          },
+          {
+            "question": "What introductory hook could you write to grab the instructor's attention?",
+            "reason": "Drafting an initial hook gets your writing momentum started without relying on AI generation."
+          }
+        ],
+        "suggestedNextActions": [
+          "Help me write an opening sentence",
+          "Give me a step-by-step checklist",
+          "What should I focus on first?"
+        ],
+        "missingInformation": [],
+        "requiresStudentAnswer": false,
+        "requiresReview": false
+      },
+      "source": "gemini-live",
+      "timestamp": 1790774205563
+    }
+  },
+  {
+    "key": "sub:general::task:no-task::mode:guide::msg:do this for me::ans:none::comments:none",
+    "entry": {
+      "data": {
+        "status": "guided_help",
+        "directResponse": "I cannot write the essay or complete this assignment for you, as doing so would violate academic integrity and prevent you from developing your own analytical voice.\n\nHowever, I can guide you through the process step-by-step! Here is a recommended structural roadmap you can follow to write your own draft:\n\n1. Introduction (40-50 words): Introduce the debate between modern tools and traditional craftsmanship, ending with your central thesis.\n2. Body Paragraph 1 (80-100 words): Discuss how modern techniques expand creative expression.\n3. Body Paragraph 2 (80-100 words): Discuss why traditional authenticity remains culturally indispensable.\n4. Synthesis & Conclusion (60-80 words): Explain how artists successfully integrate both to honor the past while innovating.",
+        "documentEvidence": [
+          {
+            "location": "Task Guidelines - Plagiarism Policy",
+            "excerptOrSummary": "Your essay must be your own work. Do not use AI tools, generators, or copied content from the internet.",
+            "whyItMatters": "Protects student standing and fulfills the thesis goal of mitigating cognitive offloading."
+          }
+        ],
+        "keyPoints": [
+          "Direct essay completion is declined to support genuine student learning.",
+          "Break writing into manageable chunks: Introduction, Arguments, Synthesis, Conclusion.",
+          "You can share a 1-2 sentence claim and I will critique its reasoning."
+        ],
+        "probingQuestions": [
+          {
+            "question": "Which of the two sides do you personally find more compelling, or do you believe synthesis is essential?",
+            "reason": "Formulating your personal viewpoint is the first step toward an original essay."
+          },
+          {
+            "question": "What introductory hook could you write to grab the instructor's attention?",
+            "reason": "Drafting an initial hook gets your writing momentum started without relying on AI generation."
+          }
+        ],
+        "suggestedNextActions": [
+          "Help me write an opening sentence",
+          "Give me a step-by-step checklist",
+          "What should I focus on first?"
+        ],
+        "missingInformation": [],
+        "requiresStudentAnswer": false,
+        "requiresReview": false
+      },
+      "source": "gemini-live",
+      "timestamp": 1790774205564
+    }
+  },
+  {
+    "key": "sub:general::task:no-task::mode:guide::msg:write my essay::ans:none::comments:none",
+    "entry": {
+      "data": {
+        "status": "guided_help",
+        "directResponse": "I cannot write the essay or complete this assignment for you, as doing so would violate academic integrity and prevent you from developing your own analytical voice.\n\nHowever, I can guide you through the process step-by-step! Here is a recommended structural roadmap you can follow to write your own draft:\n\n1. Introduction (40-50 words): Introduce the debate between modern tools and traditional craftsmanship, ending with your central thesis.\n2. Body Paragraph 1 (80-100 words): Discuss how modern techniques expand creative expression.\n3. Body Paragraph 2 (80-100 words): Discuss why traditional authenticity remains culturally indispensable.\n4. Synthesis & Conclusion (60-80 words): Explain how artists successfully integrate both to honor the past while innovating.",
+        "documentEvidence": [
+          {
+            "location": "Task Guidelines - Plagiarism Policy",
+            "excerptOrSummary": "Your essay must be your own work. Do not use AI tools, generators, or copied content from the internet.",
+            "whyItMatters": "Protects student standing and fulfills the thesis goal of mitigating cognitive offloading."
+          }
+        ],
+        "keyPoints": [
+          "Direct essay completion is declined to support genuine student learning.",
+          "Break writing into manageable chunks: Introduction, Arguments, Synthesis, Conclusion.",
+          "You can share a 1-2 sentence claim and I will critique its reasoning."
+        ],
+        "probingQuestions": [
+          {
+            "question": "Which of the two sides do you personally find more compelling, or do you believe synthesis is essential?",
+            "reason": "Formulating your personal viewpoint is the first step toward an original essay."
+          },
+          {
+            "question": "What introductory hook could you write to grab the instructor's attention?",
+            "reason": "Drafting an initial hook gets your writing momentum started without relying on AI generation."
+          }
+        ],
+        "suggestedNextActions": [
+          "Help me write an opening sentence",
+          "Give me a step-by-step checklist",
+          "What should I focus on first?"
+        ],
+        "missingInformation": [],
+        "requiresStudentAnswer": false,
+        "requiresReview": false
+      },
+      "source": "gemini-live",
+      "timestamp": 1790774205564
+    }
+  },
+  {
+    "key": "sub:general::task:no-task::mode:guide::msg:write this essay for me::ans:none::comments:none",
+    "entry": {
+      "data": {
+        "status": "guided_help",
+        "directResponse": "I cannot write the essay or complete this assignment for you, as doing so would violate academic integrity and prevent you from developing your own analytical voice.\n\nHowever, I can guide you through the process step-by-step! Here is a recommended structural roadmap you can follow to write your own draft:\n\n1. Introduction (40-50 words): Introduce the debate between modern tools and traditional craftsmanship, ending with your central thesis.\n2. Body Paragraph 1 (80-100 words): Discuss how modern techniques expand creative expression.\n3. Body Paragraph 2 (80-100 words): Discuss why traditional authenticity remains culturally indispensable.\n4. Synthesis & Conclusion (60-80 words): Explain how artists successfully integrate both to honor the past while innovating.",
+        "documentEvidence": [
+          {
+            "location": "Task Guidelines - Plagiarism Policy",
+            "excerptOrSummary": "Your essay must be your own work. Do not use AI tools, generators, or copied content from the internet.",
+            "whyItMatters": "Protects student standing and fulfills the thesis goal of mitigating cognitive offloading."
+          }
+        ],
+        "keyPoints": [
+          "Direct essay completion is declined to support genuine student learning.",
+          "Break writing into manageable chunks: Introduction, Arguments, Synthesis, Conclusion.",
+          "You can share a 1-2 sentence claim and I will critique its reasoning."
+        ],
+        "probingQuestions": [
+          {
+            "question": "Which of the two sides do you personally find more compelling, or do you believe synthesis is essential?",
+            "reason": "Formulating your personal viewpoint is the first step toward an original essay."
+          },
+          {
+            "question": "What introductory hook could you write to grab the instructor's attention?",
+            "reason": "Drafting an initial hook gets your writing momentum started without relying on AI generation."
+          }
+        ],
+        "suggestedNextActions": [
+          "Help me write an opening sentence",
+          "Give me a step-by-step checklist",
+          "What should I focus on first?"
+        ],
+        "missingInformation": [],
+        "requiresStudentAnswer": false,
+        "requiresReview": false
+      },
+      "source": "gemini-live",
+      "timestamp": 1790774205564
+    }
+  },
+  {
+    "key": "sub:general::task:no-task::mode:guide::msg:do my homework::ans:none::comments:none",
+    "entry": {
+      "data": {
+        "status": "guided_help",
+        "directResponse": "I cannot write the essay or complete this assignment for you, as doing so would violate academic integrity and prevent you from developing your own analytical voice.\n\nHowever, I can guide you through the process step-by-step! Here is a recommended structural roadmap you can follow to write your own draft:\n\n1. Introduction (40-50 words): Introduce the debate between modern tools and traditional craftsmanship, ending with your central thesis.\n2. Body Paragraph 1 (80-100 words): Discuss how modern techniques expand creative expression.\n3. Body Paragraph 2 (80-100 words): Discuss why traditional authenticity remains culturally indispensable.\n4. Synthesis & Conclusion (60-80 words): Explain how artists successfully integrate both to honor the past while innovating.",
+        "documentEvidence": [
+          {
+            "location": "Task Guidelines - Plagiarism Policy",
+            "excerptOrSummary": "Your essay must be your own work. Do not use AI tools, generators, or copied content from the internet.",
+            "whyItMatters": "Protects student standing and fulfills the thesis goal of mitigating cognitive offloading."
+          }
+        ],
+        "keyPoints": [
+          "Direct essay completion is declined to support genuine student learning.",
+          "Break writing into manageable chunks: Introduction, Arguments, Synthesis, Conclusion.",
+          "You can share a 1-2 sentence claim and I will critique its reasoning."
+        ],
+        "probingQuestions": [
+          {
+            "question": "Which of the two sides do you personally find more compelling, or do you believe synthesis is essential?",
+            "reason": "Formulating your personal viewpoint is the first step toward an original essay."
+          },
+          {
+            "question": "What introductory hook could you write to grab the instructor's attention?",
+            "reason": "Drafting an initial hook gets your writing momentum started without relying on AI generation."
+          }
+        ],
+        "suggestedNextActions": [
+          "Help me write an opening sentence",
+          "Give me a step-by-step checklist",
+          "What should I focus on first?"
+        ],
+        "missingInformation": [],
+        "requiresStudentAnswer": false,
+        "requiresReview": false
+      },
+      "source": "gemini-live",
+      "timestamp": 1790774205564
+    }
+  },
+  {
+    "key": "sub:general::task:no-task::mode:guide::msg:write the paper for me::ans:none::comments:none",
+    "entry": {
+      "data": {
+        "status": "guided_help",
+        "directResponse": "I cannot write the essay or complete this assignment for you, as doing so would violate academic integrity and prevent you from developing your own analytical voice.\n\nHowever, I can guide you through the process step-by-step! Here is a recommended structural roadmap you can follow to write your own draft:\n\n1. Introduction (40-50 words): Introduce the debate between modern tools and traditional craftsmanship, ending with your central thesis.\n2. Body Paragraph 1 (80-100 words): Discuss how modern techniques expand creative expression.\n3. Body Paragraph 2 (80-100 words): Discuss why traditional authenticity remains culturally indispensable.\n4. Synthesis & Conclusion (60-80 words): Explain how artists successfully integrate both to honor the past while innovating.",
+        "documentEvidence": [
+          {
+            "location": "Task Guidelines - Plagiarism Policy",
+            "excerptOrSummary": "Your essay must be your own work. Do not use AI tools, generators, or copied content from the internet.",
+            "whyItMatters": "Protects student standing and fulfills the thesis goal of mitigating cognitive offloading."
+          }
+        ],
+        "keyPoints": [
+          "Direct essay completion is declined to support genuine student learning.",
+          "Break writing into manageable chunks: Introduction, Arguments, Synthesis, Conclusion.",
+          "You can share a 1-2 sentence claim and I will critique its reasoning."
+        ],
+        "probingQuestions": [
+          {
+            "question": "Which of the two sides do you personally find more compelling, or do you believe synthesis is essential?",
+            "reason": "Formulating your personal viewpoint is the first step toward an original essay."
+          },
+          {
+            "question": "What introductory hook could you write to grab the instructor's attention?",
+            "reason": "Drafting an initial hook gets your writing momentum started without relying on AI generation."
+          }
+        ],
+        "suggestedNextActions": [
+          "Help me write an opening sentence",
+          "Give me a step-by-step checklist",
+          "What should I focus on first?"
+        ],
+        "missingInformation": [],
+        "requiresStudentAnswer": false,
+        "requiresReview": false
+      },
+      "source": "gemini-live",
+      "timestamp": 1790774205564
+    }
+  },
+  {
+    "key": "sub:general::task:no-task::mode:guide::msg:just do it::ans:none::comments:none",
+    "entry": {
+      "data": {
+        "status": "guided_help",
+        "directResponse": "I cannot write the essay or complete this assignment for you, as doing so would violate academic integrity and prevent you from developing your own analytical voice.\n\nHowever, I can guide you through the process step-by-step! Here is a recommended structural roadmap you can follow to write your own draft:\n\n1. Introduction (40-50 words): Introduce the debate between modern tools and traditional craftsmanship, ending with your central thesis.\n2. Body Paragraph 1 (80-100 words): Discuss how modern techniques expand creative expression.\n3. Body Paragraph 2 (80-100 words): Discuss why traditional authenticity remains culturally indispensable.\n4. Synthesis & Conclusion (60-80 words): Explain how artists successfully integrate both to honor the past while innovating.",
+        "documentEvidence": [
+          {
+            "location": "Task Guidelines - Plagiarism Policy",
+            "excerptOrSummary": "Your essay must be your own work. Do not use AI tools, generators, or copied content from the internet.",
+            "whyItMatters": "Protects student standing and fulfills the thesis goal of mitigating cognitive offloading."
+          }
+        ],
+        "keyPoints": [
+          "Direct essay completion is declined to support genuine student learning.",
+          "Break writing into manageable chunks: Introduction, Arguments, Synthesis, Conclusion.",
+          "You can share a 1-2 sentence claim and I will critique its reasoning."
+        ],
+        "probingQuestions": [
+          {
+            "question": "Which of the two sides do you personally find more compelling, or do you believe synthesis is essential?",
+            "reason": "Formulating your personal viewpoint is the first step toward an original essay."
+          },
+          {
+            "question": "What introductory hook could you write to grab the instructor's attention?",
+            "reason": "Drafting an initial hook gets your writing momentum started without relying on AI generation."
+          }
+        ],
+        "suggestedNextActions": [
+          "Help me write an opening sentence",
+          "Give me a step-by-step checklist",
+          "What should I focus on first?"
+        ],
+        "missingInformation": [],
+        "requiresStudentAnswer": false,
+        "requiresReview": false
+      },
+      "source": "gemini-live",
+      "timestamp": 1790774205564
+    }
+  },
+  {
+    "key": "sub:general-biology::task:cell-division-mitosis-meiosis::mode:guide::msg:what is this task asking me to do::ans:none::comments:none",
+    "entry": {
+      "data": {
+        "status": "guided_help",
+        "directResponse": "This task requires you to compare and contrast mitosis and meiosis in complete sentences, totaling at least 150 words. You should clearly explain the biological purpose, chromosome numbers, stages, and genetic outcomes (identical diploid daughter cells vs. unique haploid gametes). Submission is due October 8, 2026.",
+        "documentEvidence": [
+          {
+            "location": "Biology Instructions",
+            "excerptOrSummary": "Answer each question in complete sentences. Minimum 150 words total. Submit as PDF or printed copy.",
+            "whyItMatters": "Specifies required sentence format, length, and submission mode."
+          }
+        ],
+        "keyPoints": [
+          "Mitosis: 1 division, 2 diploid daughter cells, somatic growth & repair, genetically identical.",
+          "Meiosis: 2 divisions, 4 haploid gametes, sexual reproduction, genetic variation (crossing over).",
+          "Meet or exceed the 150-word minimum in complete sentences."
+        ],
+        "probingQuestions": [
+          {
+            "question": "At which specific stage of meiosis does crossing over occur to generate genetic diversity?",
+            "reason": "Pinpointing Prophase I demonstrates mechanistic mastery of chromosomal exchange."
+          },
+          {
+            "question": "Why would it be problematic if human gametes were produced through mitosis instead of meiosis?",
+            "reason": "Applying chromosomal doubling logic reinforces why reduction division is essential."
+          }
+        ],
+        "suggestedNextActions": [
+          "Explain the stages of Meiosis I and II",
+          "Give me a comparison table outline",
+          "Check my draft answer"
+        ],
+        "missingInformation": [],
+        "requiresStudentAnswer": false,
+        "requiresReview": false
+      },
+      "source": "gemini-live",
+      "timestamp": 1790774205564
+    }
+  },
+  {
+    "key": "sub:general-biology::task:cell-division-mitosis-meiosis::mode:guide::msg:explain this biology task::ans:none::comments:none",
+    "entry": {
+      "data": {
+        "status": "guided_help",
+        "directResponse": "This task requires you to compare and contrast mitosis and meiosis in complete sentences, totaling at least 150 words. You should clearly explain the biological purpose, chromosome numbers, stages, and genetic outcomes (identical diploid daughter cells vs. unique haploid gametes). Submission is due October 8, 2026.",
+        "documentEvidence": [
+          {
+            "location": "Biology Instructions",
+            "excerptOrSummary": "Answer each question in complete sentences. Minimum 150 words total. Submit as PDF or printed copy.",
+            "whyItMatters": "Specifies required sentence format, length, and submission mode."
+          }
+        ],
+        "keyPoints": [
+          "Mitosis: 1 division, 2 diploid daughter cells, somatic growth & repair, genetically identical.",
+          "Meiosis: 2 divisions, 4 haploid gametes, sexual reproduction, genetic variation (crossing over).",
+          "Meet or exceed the 150-word minimum in complete sentences."
+        ],
+        "probingQuestions": [
+          {
+            "question": "At which specific stage of meiosis does crossing over occur to generate genetic diversity?",
+            "reason": "Pinpointing Prophase I demonstrates mechanistic mastery of chromosomal exchange."
+          },
+          {
+            "question": "Why would it be problematic if human gametes were produced through mitosis instead of meiosis?",
+            "reason": "Applying chromosomal doubling logic reinforces why reduction division is essential."
+          }
+        ],
+        "suggestedNextActions": [
+          "Explain the stages of Meiosis I and II",
+          "Give me a comparison table outline",
+          "Check my draft answer"
+        ],
+        "missingInformation": [],
+        "requiresStudentAnswer": false,
+        "requiresReview": false
+      },
+      "source": "gemini-live",
+      "timestamp": 1790774205564
+    }
+  },
+  {
+    "key": "sub:general-biology::task:cell-division-mitosis-meiosis::mode:guide::msg:break down the main concepts for me::ans:none::comments:none",
+    "entry": {
+      "data": {
+        "status": "guided_help",
+        "directResponse": "This task requires you to compare and contrast mitosis and meiosis in complete sentences, totaling at least 150 words. You should clearly explain the biological purpose, chromosome numbers, stages, and genetic outcomes (identical diploid daughter cells vs. unique haploid gametes). Submission is due October 8, 2026.",
+        "documentEvidence": [
+          {
+            "location": "Biology Instructions",
+            "excerptOrSummary": "Answer each question in complete sentences. Minimum 150 words total. Submit as PDF or printed copy.",
+            "whyItMatters": "Specifies required sentence format, length, and submission mode."
+          }
+        ],
+        "keyPoints": [
+          "Mitosis: 1 division, 2 diploid daughter cells, somatic growth & repair, genetically identical.",
+          "Meiosis: 2 divisions, 4 haploid gametes, sexual reproduction, genetic variation (crossing over).",
+          "Meet or exceed the 150-word minimum in complete sentences."
+        ],
+        "probingQuestions": [
+          {
+            "question": "At which specific stage of meiosis does crossing over occur to generate genetic diversity?",
+            "reason": "Pinpointing Prophase I demonstrates mechanistic mastery of chromosomal exchange."
+          },
+          {
+            "question": "Why would it be problematic if human gametes were produced through mitosis instead of meiosis?",
+            "reason": "Applying chromosomal doubling logic reinforces why reduction division is essential."
+          }
+        ],
+        "suggestedNextActions": [
+          "Explain the stages of Meiosis I and II",
+          "Give me a comparison table outline",
+          "Check my draft answer"
+        ],
+        "missingInformation": [],
+        "requiresStudentAnswer": false,
+        "requiresReview": false
+      },
+      "source": "gemini-live",
+      "timestamp": 1790774205564
+    }
+  },
+  {
+    "key": "sub:intro-statistics::task:descriptive-statistics-problem-set::mode:guide::msg:what is this task asking me to do::ans:none::comments:none",
+    "entry": {
+      "data": {
+        "status": "guided_help",
+        "directResponse": "This task is a problem set on Descriptive Statistics based on 15 student test scores. You must compute Measures of Central Tendency (Mean, Median, Mode) and Measures of Variability (Range, Population Variance, Standard Deviation), rounding all calculations to two decimal places. Finally, in Part C, you must interpret the skewness and calculate the z-score for a score of 95. All computations must be shown.",
+        "documentEvidence": [
+          {
+            "location": "Statistics Instructions",
+            "excerptOrSummary": "Show all computations. Answers without solutions will receive partial credit only. Round answers to two decimal places.",
+            "whyItMatters": "Emphasizes the necessity of showing step-by-step arithmetic."
+          }
+        ],
+        "keyPoints": [
+          "Part A: Mean, Median, Mode (central tendency).",
+          "Part B: Range, Population Variance (divide by N=15), Standard Deviation.",
+          "Part C: Distribution skewness analysis and z-score distance."
+        ],
+        "probingQuestions": [
+          {
+            "question": "Why does the instructions sheet emphasize using the population variance formula instead of sample variance (N vs N-1)?",
+            "reason": "Ensures you use the correct denominator for the formula required by the instructor."
+          },
+          {
+            "question": "Are there any repeated values in the score set to determine whether a Mode exists?",
+            "reason": "Scanning for ties before calculating central tendency avoids overlooked multimodal cases."
+          }
+        ],
+        "suggestedNextActions": [
+          "Walk me through calculating the mean",
+          "How do I determine if the data is skewed?",
+          "What formula should I use for standard deviation?"
+        ],
+        "missingInformation": [],
+        "requiresStudentAnswer": false,
+        "requiresReview": false
+      },
+      "source": "gemini-live",
+      "timestamp": 1790774205564
+    }
+  },
+  {
+    "key": "sub:intro-statistics::task:descriptive-statistics-problem-set::mode:guide::msg:explain this statistics task::ans:none::comments:none",
+    "entry": {
+      "data": {
+        "status": "guided_help",
+        "directResponse": "This task is a problem set on Descriptive Statistics based on 15 student test scores. You must compute Measures of Central Tendency (Mean, Median, Mode) and Measures of Variability (Range, Population Variance, Standard Deviation), rounding all calculations to two decimal places. Finally, in Part C, you must interpret the skewness and calculate the z-score for a score of 95. All computations must be shown.",
+        "documentEvidence": [
+          {
+            "location": "Statistics Instructions",
+            "excerptOrSummary": "Show all computations. Answers without solutions will receive partial credit only. Round answers to two decimal places.",
+            "whyItMatters": "Emphasizes the necessity of showing step-by-step arithmetic."
+          }
+        ],
+        "keyPoints": [
+          "Part A: Mean, Median, Mode (central tendency).",
+          "Part B: Range, Population Variance (divide by N=15), Standard Deviation.",
+          "Part C: Distribution skewness analysis and z-score distance."
+        ],
+        "probingQuestions": [
+          {
+            "question": "Why does the instructions sheet emphasize using the population variance formula instead of sample variance (N vs N-1)?",
+            "reason": "Ensures you use the correct denominator for the formula required by the instructor."
+          },
+          {
+            "question": "Are there any repeated values in the score set to determine whether a Mode exists?",
+            "reason": "Scanning for ties before calculating central tendency avoids overlooked multimodal cases."
+          }
+        ],
+        "suggestedNextActions": [
+          "Walk me through calculating the mean",
+          "How do I determine if the data is skewed?",
+          "What formula should I use for standard deviation?"
+        ],
+        "missingInformation": [],
+        "requiresStudentAnswer": false,
+        "requiresReview": false
+      },
+      "source": "gemini-live",
+      "timestamp": 1790774205564
+    }
+  },
+  {
+    "key": "sub:intro-statistics::task:descriptive-statistics-problem-set::mode:guide::msg:break down the main concepts for me::ans:none::comments:none",
+    "entry": {
+      "data": {
+        "status": "guided_help",
+        "directResponse": "This task is a problem set on Descriptive Statistics based on 15 student test scores. You must compute Measures of Central Tendency (Mean, Median, Mode) and Measures of Variability (Range, Population Variance, Standard Deviation), rounding all calculations to two decimal places. Finally, in Part C, you must interpret the skewness and calculate the z-score for a score of 95. All computations must be shown.",
+        "documentEvidence": [
+          {
+            "location": "Statistics Instructions",
+            "excerptOrSummary": "Show all computations. Answers without solutions will receive partial credit only. Round answers to two decimal places.",
+            "whyItMatters": "Emphasizes the necessity of showing step-by-step arithmetic."
+          }
+        ],
+        "keyPoints": [
+          "Part A: Mean, Median, Mode (central tendency).",
+          "Part B: Range, Population Variance (divide by N=15), Standard Deviation.",
+          "Part C: Distribution skewness analysis and z-score distance."
+        ],
+        "probingQuestions": [
+          {
+            "question": "Why does the instructions sheet emphasize using the population variance formula instead of sample variance (N vs N-1)?",
+            "reason": "Ensures you use the correct denominator for the formula required by the instructor."
+          },
+          {
+            "question": "Are there any repeated values in the score set to determine whether a Mode exists?",
+            "reason": "Scanning for ties before calculating central tendency avoids overlooked multimodal cases."
+          }
+        ],
+        "suggestedNextActions": [
+          "Walk me through calculating the mean",
+          "How do I determine if the data is skewed?",
+          "What formula should I use for standard deviation?"
+        ],
+        "missingInformation": [],
+        "requiresStudentAnswer": false,
+        "requiresReview": false
+      },
+      "source": "gemini-live",
+      "timestamp": 1790774205564
+    }
+  },
+  {
+    "key": "sub:custom::task:custom-Task_1_Test.docx::mode:guide::msg:please please pleas ehelp me do this task right now::ans:none::comments:none",
+    "entry": {
+      "data": {
+        "status": "guided_help",
+        "directResponse": "I understand you are pressed for time, but I cannot write or complete the essay for you. I am here to help you get started quickly by breaking down the assignment into manageable steps so you can write a strong essay yourself before the deadline.",
+        "documentEvidence": [
+          {
+            "location": "Guidelines",
+            "excerptOrSummary": "Your essay must contain at least not less than 250 words and be your own work.",
+            "whyItMatters": "You must meet the minimum word count and write original content to avoid penalties or failing marks."
+          },
+          {
+            "location": "Modern Techniques vs. Traditional Authenticity in Contemporary Arts",
+            "excerptOrSummary": "The reading discusses how modern techniques expand creative possibilities, traditional authenticity preserves cultural heritage, and how artists can combine both approaches.",
+            "whyItMatters": "This gives you three main directions you can take for your essay's central thesis."
+          }
+        ],
+        "keyPoints": [
+          "Minimum word count requirement is 250 words.",
+          "Must be original work without AI tools or plagiarism.",
+          "The core topic is comparing or combining modern techniques and traditional authenticity in contemporary art."
+        ],
+        "probingQuestions": [
+          {
+            "question": "Do you lean more toward arguing that modern techniques are more valuable, traditional authenticity is more valuable, or that they should be combined?",
+            "reason": "Establishing your stance is the necessary first step to outlining your essay."
+          },
+          {
+            "question": "What is one specific example of a modern technique or traditional practice you plan to mention in your essay?",
+            "reason": "Specific examples will help you quickly build supporting paragraphs and easily surpass the 250-word minimum."
+          }
+        ],
+        "suggestedNextActions": [
+          "Choose your main position on the topic (modern, traditional, or a combination).",
+          "Draft a simple one-sentence thesis statement.",
+          "Write a short introductory paragraph following your thesis."
+        ],
+        "missingInformation": [
+          "Student's chosen stance on the topic",
+          "Student's draft or initial outline"
+        ],
+        "requiresStudentAnswer": true,
+        "requiresReview": false
+      },
+      "source": "gemini-live",
+      "timestamp": 1790774208900
+    }
+  }
+]

@@ -9,6 +9,7 @@ import {
   ASSISTANCE_MODES,
 } from "@/lib/study-data";
 import { parseAcademicDocument } from "@/lib/document-parser";
+import { GEMINI_MODEL_LABEL } from "@/lib/constants";
 import type { Subject, PreloadedTask, CustomDocument } from "@/lib/types";
 import { useRef, useState } from "react";
 import {
@@ -180,7 +181,7 @@ export default function DashboardPage() {
         <div className="flex items-center gap-2 text-sm text-muted">
           <span className={`w-2.5 h-2.5 rounded-full ${statusColor}`} />
           <span>AI Service: {statusLabel}</span>
-          <span className="text-xs">— Gemini 3.8 Flash</span>
+          <span className="text-xs">— {GEMINI_MODEL_LABEL}</span>
         </div>
 
         {/* Step 1: Subject Selector */}

@@ -3,6 +3,7 @@ import { GoogleGenAI } from "@google/genai";
 import OpenAI from "openai";
 import { GEMINI_MODEL } from "@/lib/constants";
 import { parseDocumentBuffer } from "@/lib/server-document-parser";
+import { smartCache } from "@/lib/smart-cache";
 import type {
   GeminiResponse,
   ProbingQuestion,
@@ -28,9 +29,9 @@ function checkRateLimit(ip: string): boolean {
   return true;
 }
 
-/* ── Key Exhaustion Cooldown Cache (1hr cooldown on 429 quota exhaustion) ── */
+/* ── Key Exhaustion Cooldown Cache (30s cooldown on 429 quota exhaustion) ── */
 const exhaustedKeys = new Map<string, number>();
-const COOLDOWN_DURATION_MS = 60 * 60 * 1000;
+const COOLDOWN_DURATION_MS = 30 * 1000;
 
 
 /* ── Cognitive Offloading Detection ── */
@@ -628,50 +629,69 @@ function generateGroundedFallback(
   };
 }
 
-/* ── Call Gemini API with Fast Timeout & Immediate Quota Failover ── */
+/* ── Call Gemini API (models.generateContent with candidate models fallback) ── */
 async function callGeminiApi(
   apiKey: string,
   promptText: string,
 ): Promise<string> {
   const ai = new GoogleGenAI({ apiKey });
 
-  // 1. Try interactions.create with strict 3500ms timeout
-  try {
-    const interaction = await ai.interactions.create(
-      { model: GEMINI_MODEL, input: promptText },
-      { maxRetries: 0, timeout: 3500 },
-    );
-    if (interaction.output_text) {
-      return interaction.output_text;
-    }
-  } catch (err: unknown) {
-    const errMsg = err instanceof Error ? err.message : String(err);
-    // If it's a quota or rate limit error, fail immediately so key rotation / NVIDIA can take over
-    if (
-      errMsg.includes("429") ||
-      errMsg.includes("quota") ||
-      errMsg.includes("Rate limit") ||
-      errMsg.includes("RESOURCE_EXHAUSTED")
-    ) {
-      throw err;
-    }
+  const candidateModels = [
+    GEMINI_MODEL,            // "gemini-3.5-flash-lite"
+    "gemini-3.1-flash-lite", // verified working in user's Clair project
+    "gemini-2.5-flash",
+    "gemini-2.0-flash",
+  ];
 
-    // Attempt generateContent fallback for non-quota errors
+  let lastError: Error | null = null;
+
+  for (const model of candidateModels) {
     try {
+      console.log(`[StudyFlow] Calling Gemini with model: "${model}"...`);
       const response = await ai.models.generateContent({
-        model: GEMINI_MODEL,
-        contents: promptText,
+        model,
+        contents: [
+          {
+            role: "user",
+            parts: [{ text: promptText }],
+          },
+        ],
+        config: {
+          systemInstruction: SYSTEM_INSTRUCTION,
+          temperature: 0.4,
+          topP: 0.9,
+          topK: 40,
+          maxOutputTokens: 2048,
+          responseMimeType: "application/json",
+        },
       });
-      if (response.text) {
-        return response.text;
+
+      const rawText =
+        response?.candidates?.[0]?.content?.parts?.[0]?.text ??
+        response?.text ??
+        "";
+
+      if (rawText && rawText.trim().length > 0) {
+        console.log(`[StudyFlow] Success! Gemini model "${model}" responded (${rawText.length} chars).`);
+        return rawText;
       }
-    } catch {
-      throw err;
+    } catch (err: unknown) {
+      const errMsg = err instanceof Error ? err.message : String(err);
+      console.warn(`[StudyFlow] Gemini model "${model}" notice:`, errMsg.substring(0, 150));
+      lastError = err instanceof Error ? err : new Error(String(err));
+      // If it's a quota or rate limit error (429), changing model on the same key won't help, fail immediately so key rotation works
+      if (
+        errMsg.includes("429") ||
+        errMsg.includes("quota") ||
+        errMsg.includes("Rate limit") ||
+        errMsg.includes("RESOURCE_EXHAUSTED")
+      ) {
+        throw err;
+      }
     }
-    throw err;
   }
 
-  throw new Error("No output text returned from Gemini API");
+  throw lastError || new Error("All Gemini candidate models failed to return content");
 }
 
 /* ── Call NVIDIA DeepSeek API (OpenAI-compatible with strict 9s timeout) ── */
@@ -863,75 +883,94 @@ export async function POST(request: Request) {
     const promptText = buildPrompt(body);
 
     const nvidiaKey =
-      process.env.NVIDIA_API_KEY ||
       process.env.DEEPSEEK_NVDIA_API ||
+      process.env.NVIDIA_API_KEY ||
       process.env.DEEPSEEK_API;
 
-    // 6. Direct NVIDIA DeepSeek Mode if explicitly selected
-    if (forceMode === "nvidia") {
-      if (nvidiaKey) {
-        try {
-          const rawResponse = await callNvidiaApi(nvidiaKey, promptText);
-          const parsed = parseGeminiOutput(rawResponse);
-          return NextResponse.json({
-            success: true,
-            data: parsed,
-            source: "nvidia-live" as ServiceSource,
-            timestamp: new Date().toISOString(),
-          });
-        } catch (err: unknown) {
-          const errMsg = err instanceof Error ? err.message : String(err);
-          console.warn("Direct NVIDIA API notice:", errMsg.substring(0, 100));
-        }
+    // 6. Direct NVIDIA DeepSeek Mode if explicitly selected in controls
+    if (forceMode === "nvidia" && nvidiaKey) {
+      try {
+        console.log("[StudyFlow] Explicit NVIDIA mode requested, calling NVIDIA DeepSeek...");
+        const rawResponse = await callNvidiaApi(nvidiaKey, promptText);
+        const parsed = parseGeminiOutput(rawResponse);
+        smartCache.set(body, parsed, "nvidia-live");
+        return NextResponse.json({
+          success: true,
+          data: parsed,
+          source: "nvidia-live" as ServiceSource,
+          timestamp: new Date().toISOString(),
+        });
+      } catch (err: unknown) {
+        const errMsg = err instanceof Error ? err.message : String(err);
+        console.warn("[StudyFlow] Explicit NVIDIA call failed/timed out:", errMsg.substring(0, 100));
+        console.log("[StudyFlow] Cascading to Gemini API keys...");
+        // Do NOT return local fallback! Cascade to Gemini below!
       }
-      // If direct NVIDIA failed or key missing, immediately return grounded fallback (do NOT fall through to broken Gemini keys!)
-      const fallback = generateGroundedFallback(body);
-      return NextResponse.json({
-        success: true,
-        data: fallback,
-        source: "local-fallback" as ServiceSource,
-        timestamp: new Date().toISOString(),
-      });
     }
 
-    // 7. Key Rotation across Gemini Keys (with 1hr quota cooldown check)
+    // 7. Smart Academic Cache Check (<5ms response, preserves API limits, prevents defense failures)
+    // Only check cache if not forcing a specific fallback test
+    if (!forceMode) {
+      const cachedHit = smartCache.get(body);
+      if (cachedHit) {
+        console.log("[StudyFlow] Serving from Smart Academic Cache (<5ms latency, 0 quota)");
+        return NextResponse.json({
+          success: true,
+          data: cachedHit.data,
+          source: cachedHit.source,
+          cached: true,
+          timestamp: new Date().toISOString(),
+        });
+      }
+    }
+
     const now = Date.now();
-    const keys = [
+
+    // 8. ALL 3 GEMINI APIS (Priority 1, 2, 3)
+    // We try all 3 Gemini keys in order: GEMINI_API_KEY -> FALLBACK_1 -> FALLBACK_2
+    const geminiKeyConfigs = [
       {
         key: process.env.GEMINI_API_KEY,
         source: "gemini-live" as ServiceSource,
+        label: "Primary GEMINI_API_KEY",
       },
       {
         key: process.env.GEMINI_API_KEY_FALLBACK_1,
         source: "gemini-backup" as ServiceSource,
+        label: "Fallback 1 GEMINI_API_KEY_FALLBACK_1",
       },
       {
         key: process.env.GEMINI_API_KEY_FALLBACK_2,
         source: "gemini-backup" as ServiceSource,
+        label: "Fallback 2 GEMINI_API_KEY_FALLBACK_2",
       },
     ];
 
-    let candidateKeys = keys.filter((k) => {
-      if (!k.key) return false;
-      const cooldownUntil = exhaustedKeys.get(k.key);
-      if (cooldownUntil && now < cooldownUntil) {
-        return false;
-      }
-      return true;
-    });
-
+    let candidateGemini = geminiKeyConfigs;
     if (forceMode === "fallback-1") {
-      candidateKeys = candidateKeys.filter((_, i) => i >= 1);
+      candidateGemini = geminiKeyConfigs.slice(1);
     } else if (forceMode === "fallback-2") {
-      candidateKeys = candidateKeys.filter((_, i) => i >= 2);
+      candidateGemini = geminiKeyConfigs.slice(2);
     }
 
-    // Execute Live Call with Gemini Key Rotation (if candidate keys exist)
-    for (const { key, source } of candidateKeys) {
-      if (!key) continue;
+    for (const { key, source, label } of candidateGemini) {
+      if (!key) {
+        console.log(`[StudyFlow] ${label} is not set in environment.`);
+        continue;
+      }
+
+      const cooldownUntil = exhaustedKeys.get(key);
+      if (cooldownUntil && now < cooldownUntil) {
+        console.log(`[StudyFlow] ${label} is in temporary 30s cooldown, trying next key...`);
+        continue;
+      }
+
       try {
+        console.log(`[StudyFlow] Calling Gemini API using ${label}...`);
         const rawResponse = await callGeminiApi(key, promptText);
         const parsed = parseGeminiOutput(rawResponse);
+        smartCache.set(body, parsed, source);
+        console.log(`[StudyFlow] Success from ${label}!`);
         return NextResponse.json({
           success: true,
           data: parsed,
@@ -940,10 +979,7 @@ export async function POST(request: Request) {
         });
       } catch (err: unknown) {
         const errMsg = err instanceof Error ? err.message : String(err);
-        console.warn(
-          `Gemini key notice for ${source}:`,
-          errMsg.substring(0, 100),
-        );
+        console.warn(`[StudyFlow] ${label} error:`, errMsg.substring(0, 150));
         if (
           errMsg.includes("429") ||
           errMsg.includes("quota") ||
@@ -955,12 +991,14 @@ export async function POST(request: Request) {
       }
     }
 
-    // 8. Resilient NVIDIA DeepSeek API Failover
-    // If Gemini keys hit quota or are unavailable, try NVIDIA DeepSeek
+    // 9. NVIDIA DeepSeek API (Priority 4 Failover)
     if (nvidiaKey) {
       try {
+        console.log("[StudyFlow] Gemini keys exhausted or failed. Calling NVIDIA DeepSeek failover...");
         const rawResponse = await callNvidiaApi(nvidiaKey, promptText);
         const parsed = parseGeminiOutput(rawResponse);
+        smartCache.set(body, parsed, "nvidia-live");
+        console.log("[StudyFlow] NVIDIA DeepSeek succeeded!");
         return NextResponse.json({
           success: true,
           data: parsed,
@@ -969,12 +1007,14 @@ export async function POST(request: Request) {
         });
       } catch (err: unknown) {
         const errMsg = err instanceof Error ? err.message : String(err);
-        console.warn("NVIDIA DeepSeek failover notice:", errMsg.substring(0, 100));
+        console.warn("[StudyFlow] NVIDIA DeepSeek failover error:", errMsg.substring(0, 100));
       }
     }
 
-    // 9. Graceful Fallback if all API keys fail or are exhausted
+    // 10. Grounded Academic Fallback Engine (Zero failure guarantee)
+    console.log("[StudyFlow] All live APIs failed. Serving Grounded Academic Fallback.");
     const fallbackData = generateGroundedFallback(body);
+    smartCache.set(body, fallbackData, "local-fallback");
     return NextResponse.json({
       success: true,
       data: fallbackData,

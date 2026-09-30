@@ -62,28 +62,38 @@ flowchart TD
         RATE_LIMIT -->|Allowed| CHECK_MODE{Service Mode in Controls}:::decision
     end
 
-    %% Phase 5: Multi-Tier Resilient AI Service Pipeline
-    subgraph S5 [Phase 5: Resilient LLM Backend & Cognitive Safeguards]
+    %% Phase 5: Smart Cache & Multi-Tier Cascading Pipeline
+    subgraph S5 [Phase 5: Smart Cache & Cascading AI Pipeline]
         CHECK_MODE -->|Force Local| GROUNDED_ENGINE
-        CHECK_MODE -->|NVIDIA Direct| CALL_NVIDIA[Call NVIDIA DeepSeek-v4.1-flash API]:::aiLogic
-        CHECK_MODE -->|Primary / Fallback| EVAL_OFFLOADING{Detect Cognitive Offloading?<br/>'Do this for me', 'Write my essay'}:::decision
+        CHECK_MODE -->|NVIDIA Direct| CALL_NVIDIA[Tier 2: Call NVIDIA DeepSeek-v4.1-flash API]:::aiLogic
+        CHECK_MODE -->|Primary Pipeline| CHECK_CACHE{Smart Academic Cache Hit?<br/>In-Memory / Disk / Pre-Warmed}:::decision
+
+        CHECK_CACHE -->|Yes: Hit <5ms| FORMAT_JSON[Parse JSON & Validate Response Schema]:::process
+        CHECK_CACHE -->|No: Miss| EVAL_OFFLOADING{Detect Cognitive Offloading?<br/>'Do this for me', 'Write my essay'}:::decision
 
         EVAL_OFFLOADING -->|Yes: Offloading Detected| SAFEGUARD_REFUSAL[Refuse Direct Completion:<br/>Provide Scaffolding, Outline & Hints]:::safeguard
-        SAFEGUARD_REFUSAL --> FORMAT_JSON
-        EVAL_OFFLOADING -->|No: Valid Request| CALL_GEMINI[Call Gemini API: gemini-3.8-flash]:::aiLogic
+        SAFEGUARD_REFUSAL --> CACHE_WRITE[Save to Smart Cache & Disk]:::storage
+        CACHE_WRITE --> FORMAT_JSON
 
-        CALL_GEMINI --> GEMINI_RES{Gemini Call Status}:::decision
-        GEMINI_RES -->|Success 200| FORMAT_JSON[Parse JSON & Validate Response Schema]:::process
-        GEMINI_RES -->|429 Quota / Error| COOLDOWN[Mark Key Cooldown 1 Hour]:::process
-        COOLDOWN --> TRY_FALLBACK_GEMINI{Other Gemini Keys Available?}:::decision
-        TRY_FALLBACK_GEMINI -->|Yes| CALL_GEMINI
-        TRY_FALLBACK_GEMINI -->|No: Exhausted| CALL_NVIDIA
+        EVAL_OFFLOADING -->|No: Valid Request| CALL_GEMINI_1[Priority 1: Primary Gemini 3.5 Flash Lite]:::aiLogic
+
+        CALL_GEMINI_1 --> GEMINI_1_RES{Primary Gemini Status}:::decision
+        GEMINI_1_RES -->|Success 200| CACHE_WRITE
+        GEMINI_1_RES -->|429 Quota / Cooldown| CALL_NVIDIA
 
         CALL_NVIDIA --> NVIDIA_RES{NVIDIA API Status}:::decision
         NVIDIA_RES -->|Success 200| CLEAN_DEEPSEEK[Strip Think Tags & Clean JSON Blocks]:::process
-        CLEAN_DEEPSEEK --> FORMAT_JSON
-        NVIDIA_RES -->|Error / Timeout 9s| GROUNDED_ENGINE[Offline Grounded Academic Fallback Engine]:::storage
-        GROUNDED_ENGINE --> FORMAT_JSON
+        CLEAN_DEEPSEEK --> CACHE_WRITE
+        NVIDIA_RES -->|Error / Timeout 9s| CALL_GEMINI_FB1[Priority 3: Gemini Fallback Key 1]:::aiLogic
+
+        CALL_GEMINI_FB1 --> FB1_RES{Fallback 1 Status}:::decision
+        FB1_RES -->|Success 200| CACHE_WRITE
+        FB1_RES -->|Error / Cooldown| CALL_GEMINI_FB2[Priority 4: Gemini Fallback Key 2]:::aiLogic
+
+        CALL_GEMINI_FB2 --> FB2_RES{Fallback 2 Status}:::decision
+        FB2_RES -->|Success 200| CACHE_WRITE
+        FB2_RES -->|Error / Cooldown| GROUNDED_ENGINE[Priority 5: Grounded Academic Fallback Engine]:::storage
+        GROUNDED_ENGINE --> CACHE_WRITE
     end
 
     %% Phase 6: Response Rendering & Pedagogical Verification
